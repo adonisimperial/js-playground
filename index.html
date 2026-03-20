@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanilla Frontend Playground</title>
+        
+    <link rel="stylesheet"  href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Black+Ops+One&family=Creepster&family=La+Belle+Aurore&family=MedievalSharp&family=Orbitron&display=swap">
+</head>
+<body>
+    <h1>Changing Shape</h1>
+
+    <div class="profile-wrapper">
+        <img 
+            class="profile-pic"
+            src="profile.jpg"
+            alt="Adonis Imperial profile photo smiling on the camera wearing blue shirt"
+        >
+    </div>
+
+    <p>
+        <button onclick="setShape('square')">Square</button>
+        <button onclick="setShape('circle')">Circle</button>
+        <button onclick="setShape('slanted')">Slanted</button>
+    </p>
+
+    <h1>Save Input</h1>
+
+    <input type="text" id="input-el">
+    <button id="input-btn">Save Input</button>
+    <!--<button onclick="saveInput()">Save Input</button>-->
+    <button id="delete-btn" title="Double click to delete all saved inputs">Delete All</button>
+    <ul id="ul-el">
+        <!-- elements here -->
+    </ul>
+
+    <script src="index.js"></script>
+</body>
+</html>

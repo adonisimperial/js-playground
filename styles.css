@@ -1,0 +1,68 @@
+/*.profile-pic {
+    width: 200px;
+    //border: solid 2px red;
+    padding: 5px;
+    background: red;
+    clip-path: polygon(20% 0%, 40% 0%, 100% 0%, 80% 100%, 0% 100%);
+}*/
+
+:root {
+    --shape: polygon(20% 0%, 40% 0%, 100% 0%, 80% 100%, 0% 100%);
+}
+
+.profile-wrapper {
+    width: 200px;
+    padding: 2px;
+    background: red;
+    border-radius: 5px;
+    clip-path: var(--shape);
+}
+
+.profile-pic {
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+    clip-path: var(--shape);
+}
+
+input {
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid blue;
+    border-radius: 5px;
+}
+
+button {
+    background: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#delete-btn {
+    position: relative;
+    background: white;
+    color: blue;
+    padding: 10px 20px;
+    border: 1px solid blue;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#delete-btn::after {
+    content: attr(title);
+    position: absolute;
+    opacity: 0;
+}
+
+#delete-btn::hover::after {
+    opacity: 1;
+}
+
+ul {
+    margin-top: 20px;
+    list-style: none;
+    padding-left: 0;
+}
