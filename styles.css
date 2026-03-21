@@ -8,20 +8,21 @@
 
 :root {
     --shape: polygon(20% 0%, 40% 0%, 100% 0%, 80% 100%, 0% 100%);
+    --radius: 5px;
 }
 
 .profile-wrapper {
     width: 200px;
     padding: 2px;
     background: red;
-    border-radius: 5px;
+    border-radius: var(--radius);
     clip-path: var(--shape);
 }
 
 .profile-pic {
     width: 100%;
     display: block;
-    border-radius: 5px;
+    border-radius: var(--radius);
     clip-path: var(--shape);
 }
 
@@ -29,7 +30,7 @@ input {
     padding: 10px;
     box-sizing: border-box;
     border: 1px solid blue;
-    border-radius: 5px;
+    border-radius: var(--radius);
 }
 
 button {
@@ -37,27 +38,40 @@ button {
     color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--radius);
     font-weight: bold;
 }
 
-#delete-btn {
+button[title] {
     position: relative;
+}
+
+#delete-btn {
     background: white;
     color: blue;
     padding: 10px 20px;
     border: 1px solid blue;
-    border-radius: 5px;
+    border-radius: var(--radius);
     font-weight: bold;
 }
 
-#delete-btn::after {
+button[title]::after {
     content: attr(title);
     position: absolute;
     opacity: 0;
+
+    background: blue;
+    color: white;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    padding: 5px 8px;
+    border-radius: var(--radius);
+
 }
 
-#delete-btn::hover::after {
+button[title]:hover::after {
     opacity: 1;
 }
 

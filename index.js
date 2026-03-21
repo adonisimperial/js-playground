@@ -30,12 +30,15 @@ function setShape(type) {
         // Keep polygon clip-path for slanted
         profilePic.style.clipPath = shapes.slanted;
         profilePic.style.borderRadius = "5px";
+        document.documentElement.style.setProperty('--radius', radius + "px");
     } else if (type === 'square') {
         profilePic.style.clipPath = "none"; // remove clip-path
         profilePic.style.borderRadius = radius + "px";
+        document.documentElement.style.setProperty('--radius', radius + "px");
     } else if (type === 'circle') {
         profilePic.style.clipPath = "none"; // remove clip-path
         profilePic.style.borderRadius = "50%"; // full circle
+        document.documentElement.style.setProperty('--radius', radius + "px");
     }
 
 }
@@ -56,11 +59,21 @@ const inputBtn = document.getElementById("input-btn")
 const ulEl =document.getElementById("ul-el")
 const deleteBtn = document.getElementById("delete-btn")
 const leadsFromLocalStorage = JSON.parse( localStorage.getItem("myLeads") )
+const tabBtn = document.getElementById("tab-btn")
 
 if (leadsFromLocalStorage) {
     myLeads = leadsFromLocalStorage
     renderLeads()
 }
+
+tabBtn.addEventListener("click", function() {
+    // chrome.tabs.query ONLY works inside extension context, not regular browser page
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        myLeads.push(tabs[0].url)
+        localStorage.setItem("myLeads", JSON.stringify(myLeads))
+        renderLeads(myLeads)
+    })
+})
 
 deleteBtn.addEventListener("dblclick", function() {
     localStorage.clear()

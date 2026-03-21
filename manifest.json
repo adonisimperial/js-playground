@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Tab URL Copy JS",
+  "version": "1.0",
+  "permissions": ["tabs", "clipboardRead", "clipboardWrite"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "profile.png"
+  }
+}
