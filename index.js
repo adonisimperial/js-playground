@@ -192,6 +192,46 @@ setTimeout(() => {
     console.log('Red light - Stop!');
 }, 6000);
 
+// Event Loop (at 15:41:41 in the video)
+/*
+JS Runtime Environment:
+Heap & Call Stack
+
+Asynchronous APIs:
+WebAPI: setTimeout, setInterval, Fetching data across the network, Promises, DOM manipulation, Data requests, Event Listeners, etc.
+Task Queue: Callbacks from WebAPI are queued here
+Event Loop: Continuously checks if Call Stack is empty and moves tasks from Task Queue to Call Stack
+*/
+
+const start = performance.now();    // Get the starting timestamp
+
+// code you want to measure
+for (let i = 0; i < 1000000; i++) {
+    let answer = i * 2000000 / 67.8 * (45.7 / 3.2)
+}
+
+setTimeout(() => {
+    // Get the ending timestamp after the asynchronous operation completes
+    const end = performance.now();
+    console.log(`Execution time: ${end - start} ms`); // e.g. Time taken: 2002.34 ms
+}, 4000);   // A minimum of 4000 ms depending on what's in the task queue and call stack; as there is setTimeout with 4000 ms on the above code the execution maybe delayed a little bit more
+
+// Scope and Hoisting
+/*
+Scope (what variables are accessible where):
+Global Scope: Accessible everywhere
+Function Scope: Accessible within the function
+Block Scope: Accessible within the block (if, for, while)  
+
+Hoisting (variable and function declarations are moved to the top):
+var: Hoisted and initialized with undefined
+let and const: Hoisted but not initialized (Temporal Dead Zone)
+Functions: Fully hoisted (can be called before declaration)
+*/
+
+// Import/Export (at 15:50:52)
+// Next topic...
+
 // FUNCTIONS AND PARAMETERS
 
 // ASYNCHRONOUS JAVASCRIPT AND APIs
