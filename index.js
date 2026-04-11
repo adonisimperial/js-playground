@@ -332,6 +332,67 @@ setInterval(function() {
 */
 
 // FUNCTIONS AND PARAMETERS
+/*
+Functions Expressions and Arrow Functions
+Default Parameters
+Rest Parameters
+*/
+
+// Arrow Function
+/*
+const getSpendAlert = function(amount) {
+    return `Warning! You have spent $${amount}`;
+}
+
+Arrow Function with block body which is usable with multiple parameters and logic
+const getSpendAlert = (amount) => {
+    return `Warning! You have spent $${amount}`;
+}
+*/
+
+// Shortest and cleanest arrow function with only one parameter
+const getSpendAlert = amount => `Warning! You have spent $${amount}`;
+console.log(getSpendAlert(100)); // Output: Warning! You have spent $100
+
+// Inline Arrow Function
+const distanceTraveledMiles = [267, 345, 234, 190, 200];
+const distanceTraveledKm = distanceTraveledMiles.map(miles => (miles * 1.60934).toFixed(2));
+console.log(distanceTraveledKm); // Output: ['429.17', '555.86', '376.94', '305.75', '321.87']
+
+// Default Parameters
+function greet(name = 'Guest') {
+    return `Hello, ${name}!`;
+}
+
+console.log(greet()); // Output: Hello, Guest!
+
+// Rest Parameters: Catching the rest of the arguments
+function setPermissionLevel(level, name1, name2, name3) {
+    console.log(`${name1} has ${level} level access`);
+    console.log(`${name2} has ${level} level access`);
+    console.log(`${name3} has ${level} level access`);
+}
+
+setPermissionLevel('User', 'Alice', 'Jane', 'Mary');
+// Output:
+// Alice has User level access
+// Jane has User level access
+// Mary has User level access
+
+// Caveat: The above function is not scalable if you have more than 3 names and error when you passed less than 3 names, where rest parameters will be useful
+/*
+setPermissionLevel('User', 'Alice', 'Jane', 'Mary', 'Sara'); // Sara will be ignored
+setPermissionLevel('User', 'Alice'); // Error: name2 and name3 are undefined
+*/
+
+// Rest Parameters to the Rescue
+function setRestPermission(level, ...names) {
+    names.forEach(name => {
+        console.log(`${name} has ${level} level access`);
+    });
+}
+setRestPermission('Admin', 'Andy', 'Bob', 'Charlie', 'John'); // Output: Andy has Admin level access, Bob has Admin level access, Charlie has Admin level access, John has Admin level access
+setRestPermission('Admin', 'Andy'); // Output: Andy has Admin level access
 
 // ASYNCHRONOUS JAVASCRIPT AND APIs
 /*
