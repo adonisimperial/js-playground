@@ -1,3 +1,6 @@
+// These are simple playground going back to basics of JavaScript
+// Check the js-fullstack-path project/repo for the application or continuation of the roadmap
+
 // PROFILE SHAPE SWITCHER
 const shapes = {
     slanted: "polygon(20% 0%, 40% 0%, 100% 0%, 80% 100%, 0% 100%)",
@@ -133,11 +136,8 @@ Event Loop
 Scope
 Hoisting
 Import/Export
-Date Constructor
-Error Constructor
-Pre-increment and Post-increment
-bigint
-Numeric Separators
+Inbuilt Constructor: Date Constructor, Error Constructor
+Numeric Separators and BigInt
 
 Use the above advance foundations when building real world projects using Vanilla JavaScript. You can also use them in your React projects as well.
 ref: https://www.youtube.com/watch?v=LzMnsfqjzkA&t=88697s
@@ -146,26 +146,26 @@ at: 15:14:00
 
  // Ternary Operator
  const age = 18
- const canDrive = age < 18 ? "No, too young to drive" : age >= 70 ? "No, too old to drive" :  "Yes, can drive"
+ const canDrive = age < 18 ? 'No, too young to drive' : age >= 70 ? 'No, too old to drive' :  'Yes, can drive'
  console.log(canDrive) // Output: Yes, can drive
 
 // switch statement
-const day = "Monday"
+const day = 'Monday'
 
 switch (day) {
-    case "Monday":
-        console.log("Start of the week")
+    case 'Monday':
+        console.log('Start of the week')
         break
-    case "Friday":
-        console.log("End of the week")
+    case 'Friday':
+        console.log('End of the week')
         break
     default:
-        console.log("Midweek day")
+        console.log('Midweek day')
 }   // Output: Start of the week
 
 // Object Destructuring and Currency Formatting
 const employees = {
-    employee: "Alice",
+    employee: 'Adonis',
     salary: 3000,
     position: "Software Engineer",
 }
@@ -223,14 +223,113 @@ Global Scope: Accessible everywhere
 Function Scope: Accessible within the function
 Block Scope: Accessible within the block (if, for, while)  
 
-Hoisting (variable and function declarations are moved to the top):
+Hoisting (variable and function declarations are moved to the top of their containing scope during compilation phase before code execution ):
 var: Hoisted and initialized with undefined
 let and const: Hoisted but not initialized (Temporal Dead Zone)
 Functions: Fully hoisted (can be called before declaration)
 */
 
 // Import/Export (at 15:50:52)
-// Next topic...
+/*
+Check this in the js-fullstack-path project/repo
+This needs module script depending on browser
+It also needs to run with a local server (e.g. Live Server, Vite or Node.js) because of CORS policy when using import/export in the browser
+*/
+
+// Inbuilt Constructor(at 15:57:00)
+// Date Constructor
+const now = new Date();
+console.log(now); // Output: Current date and time
+console.log(now.toString()); // Output: Current date and time in human-readable format.
+console.log(now.toISOString()); // Output: Current date and time in ISO format (e.g. 2024-06-01T12:00:00.000Z)
+console.log(now.getFullYear()); // Output: Current year (e.g. 2024)
+
+// Error Constructor
+function checkUsername(username) {
+    if (username) {
+        console.log(username);
+    } else {
+        throw new Error('Username is required!');
+    }
+}
+
+checkUsername('Alice'); // Output: Alice
+//checkUsername(''); // Throws an error: "Username is required!"
+// checkUsername('') was commented out coz it prevents the rest of the code from running due to the thrown error, but you can uncomment it to see how the Error Constructor works in action.
+// Constructor for common data types
+/*
+Sting()
+Number()
+Array()
+Object()
+Boolean()
+*/
+
+const person = new Object();  // Object constructor syntax, which is more verbose and less commonly used or not advisable for creating simple objects
+//const person = {};  // Object literal syntax, which is more concise and commonly used
+person.name = "Tom";
+person.age = 30;
+console.log(person); // Output: { name: 'Alice', age: 30 }
+console.log(person.name); // Output: Alice
+
+// Numeric Separators and BigInt
+// BigInt is useful for database IDs or large integer values that exceed the safe integer limit of JavaScript (Number.MAX_SAFE_INTEGER, which is 9007199254740991) such as cryptography
+// With BigInt, calculations are not preferable and throws an error if you try to mix BigInt with regular numbers without explicit conversion, so it is best used for storing and handling large integer values rather than performing arithmetic operations with them.
+const largeNumber = 1_000_000_000_000_000;
+const bigNumber = 1_000_000_000_000_000_000n;
+// const bigNumber = BigInt(1_000_000_000_000_000_000); // Alternative way to create a BigInt using the BigInt constructor
+
+console.log(typeof largeNumber); // Output: number
+console.log(typeof bigNumber); // Output: bigint
+console.log(largeNumber); // Output: 1000000000000000
+console.log(bigNumber); // Output: 1000000000000000000n
+
+// ADVANCE FOUNDATIONS APPLICATIONS
+// Use of Date(), Math(), Object Destructuring, setInterval, 
+function getStockData() {
+    return {
+        name: 'QtechAI',
+        sym: 'QTA',
+        price: (Math.random() * 3).toFixed(2),    // return a random number between 0 and 3 to the decimal places
+        time: new Date().toLocaleTimeString('en-US'),    // return a timestamp in this format: hh/mm/ss
+    }
+}
+
+let previousPrice = null;
+
+function updateStockData() {
+    const stockData = getStockData();
+    // Without destructuring
+    /*
+    document.getElementById('stock-name').textContent = stockData.name;
+    document.getElementById('stock-symbol').textContent = stockData.sym;
+    document.getElementById('stock-price').textContent = stockData.price;
+    document.getElementById('stock-time').textContent = stockData.time;
+    */
+    // With destructuring
+    const { name, sym, price, time } = stockData;
+
+    const symbolDirection = price > previousPrice ? '🔺' : price < previousPrice ? '🔻' : '⏸️';
+    document.getElementById('stock-direction').textContent = symbolDirection;
+
+    document.getElementById('stock-name').textContent = name;
+    document.getElementById('stock-symbol').textContent = sym;
+    document.getElementById('stock-price').textContent = price;
+    document.getElementById('stock-time').textContent = time;
+
+    previousPrice = price;
+}
+
+updateStockData(); // Initial call to display stock data immediately
+setInterval(updateStockData, 1500); // Update stock data every 5 seconds
+
+// The above block is cleaner and simpler if nothing pass and no additional logic
+/*
+setInterval(function() {
+    const stockData = getStockData();
+    updateStockData();
+}, 1500); // Update stock data every 5 seconds using an anonymous function instead of arrow function, both are fine and it is a matter of preference and readability in this case
+*/
 
 // FUNCTIONS AND PARAMETERS
 
