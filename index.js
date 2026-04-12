@@ -407,6 +407,17 @@ notifyUser(sendSMSNotification); // Output: SMS notification sent!
 
 // ASYNCHRONOUS JAVASCRIPT AND APIs
 
+// Researched comparison on the Fetch, Ajax and jQuery that I handled that turns to be an evolution of asynchronous JS handling and realtime data fetching
+/*
+Asynchronous Functions Evolution (from classic to modern):
+Ajax - jQuery - Fetch
+
+Fetch Evolution:
+.then and .catch - Async/Await
+*/
+
+// Thenable/Callback vs Asynchronous Functions
+// @ 18:26:57
 // Base URL and Endpoints
 /*
 // Base URL
@@ -417,7 +428,7 @@ https://apis.scrimba.com/dog.ceo/api
 /breeds/image/random
 */
 
-// fetch().then()
+// fetch().then() syntax - Thenable/Callback Approach
 fetch('https://apis.scrimba.com/dog.ceo/api/breeds/image/random')
     .then(response => response.json())  // response converted to a JavaScript object to be usable in the our app with JSON method
     // Then is a method which will pick up what we get back from fetch and make it available to us in a parameter in a callback function
@@ -438,7 +449,7 @@ fetch('https://apis.scrimba.com/dog.ceo/api/breeds/image/random')
         console.log('Fetch operation completed');
     });
 
-// Async/Await
+// Async/Await syntax - Asynchronous Functions
 async function fetchRandomDogImage() {
     try {
         //const response = fetch('https://apis.scrimba.com/dog.ceo/api/breeds/image/random'); // Output: Promise {}
@@ -462,11 +473,122 @@ async function fetchRandomDogImage() {
 }
 fetchRandomDogImage();
 
-// Researched comparison on the Fetch, Ajax and jQuery that I handled that turns to be an evolution of asynchronous JS handling and realtime data fetching
-/*
-Asynchronous Functions Evolution (from classic to modern):
-Ajax - jQuery - Fetch
+// Taking API to the Next Level (at 19:12:15)
 
-Fetch Evolution:
-.then and .catch - Async/Await
+// JSON Placeholder API: Free fake API for testing and prototyping
+// Methods: GET, POST, PUT, DELETE, PATCH and OPTIONS
+async function fetchPosts() {
+    try {
+        //const response = await fetch('https://apis.scrimba.com/jsonplaceholder/posts');   // GET is the default method for fetch, so it's ot necessary to specify it, but it is useful to specify the method when you need to use other methods such as POST, PUT, DELETE, PATCH and OPTIONS
+        const response = await fetch('https://apis.scrimba.com/jsonplaceholder/posts',
+            {
+                method: 'POST',
+                headers: {  // headers contains extra (meta) info about the request, authentication, type of data, etc. This is not an exhausted list!
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({  // need to stringify before sending off to convert to JSON string format, which is the standard format for sending data in APIs
+                    title: 'Holiday Nightmares',
+                    body: 'When I was kidnapped in Scotloand...',
+                    userId: 100
+                })
+            });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+    } catch (err) {
+        console.error('Error fetching JSON Placeholder data:', err);
+    }
+}
+fetchPosts();
+
+// The Promise Constructor: Building our Own Async Actions
+const promise = new Promise((resolve, reject) => {
+    const success = Math.random() > 0.5;
+    if (success) {
+        resolve('Operation successful!');
+    } else {
+        reject('Operation failed!');
+    }
+});
+
+// cleaner way without try catch block
+promise.then(response => console.log(response)).catch(error => console.error(error));
+
+// Handling the promise using try/catch
+/* error in my chrome browser console
+try {
+    const response = await promise;
+    console.log(response);
+} catch (err) {
+    console.error(err);
+}
+*/
+
+// Promise.all: Running Multiple Async Operations in Parallel
+function uploadFile() {
+    return new Promise((resolve, reject) => {
+        console.log('Step 1: Uploading file...');
+        setTimeout(() => {
+            resolve();  // Call the next step after 1 second
+        }, 1000);
+    });
+}
+
+function processFile() {
+    return new Promise((resolve, reject) => {
+        console.log('Step 2: Processing file...');
+        setTimeout(() => {
+            resolve();  // Call the next step after 1 second
+        }, 1000);
+    });
+}
+
+function notifyUserX() {
+    return new Promise((resolve, reject) => {
+        console.log('Step 3: Notifying user...');
+        setTimeout(() => {
+            resolve();  // Call the next step after 1 second
+        }, 1000);
+    });
+}
+
+// Using try/catch with async/await
+async function handleFileUpload() {
+    try {
+        await uploadFile();
+        await processFile();
+        await notifyUserX();
+        console.log('All steps completed successfully!');
+    } catch (err) {
+        console.error('Error handling file upload:', err);
+    }
+}
+handleFileUpload();
+
+// You could also use
+/*
+uploadFile(() => {
+    processFile(() => {
+        notifyUserX(() => {
+            console.log('All steps completed successfully!');
+        });
+    });
+});
+*/
+
+// Promise.all
+/*
+Promise.all([
+    uploadFile(),
+    processFile(),
+    notifyUserX()
+]).then(() => {
+    console.log('All steps completed successfully!');
+}).catch((error) => {
+    console.error('Error handling file upload:', error);
+});
 */
