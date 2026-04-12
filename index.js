@@ -394,7 +394,75 @@ function setRestPermission(level, ...names) {
 setRestPermission('Admin', 'Andy', 'Bob', 'Charlie', 'John'); // Output: Andy has Admin level access, Bob has Admin level access, Charlie has Admin level access, John has Admin level access
 setRestPermission('Admin', 'Andy'); // Output: Andy has Admin level access
 
+// Callback Functions
+function notifyUser(notificationFn) {
+    notificationFn()
+}
+
+const sendEmailNotification = () => console.log('Email notification sent!');
+const sendSMSNotification = () => console.log('SMS notification sent!');
+
+notifyUser(sendEmailNotification); // Output: Email notification sent!
+notifyUser(sendSMSNotification); // Output: SMS notification sent!
+
 // ASYNCHRONOUS JAVASCRIPT AND APIs
+
+// Base URL and Endpoints
+/*
+// Base URL
+https://apis.scrimba.com/dog.ceo/api
+
+// Endpoints
+/breeds/list/all
+/breeds/image/random
+*/
+
+// fetch().then()
+fetch('https://apis.scrimba.com/dog.ceo/api/breeds/image/random')
+    .then(response => response.json())  // response converted to a JavaScript object to be usable in the our app with JSON method
+    // Then is a method which will pick up what we get back from fetch and make it available to us in a parameter in a callback function
+    // or make it availablein the next .then() as the parameter of the callback
+    //.then(data => console.log(data))  // Output: { message: 'https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg', status: 'success' }
+    .then(data => {
+        const imgElement = document.createElement('img');
+        imgElement.src = data.message;
+        imgElement.alt = 'Random Dog Image';
+        document.body.appendChild(imgElement);
+    })
+    //.catch(error => console.error('Error fetching dog image:', error)); // catch is a method which will catch any error that occurs during the fetch
+    .catch(err => {
+        console.log(err);
+
+    })
+    .finally(() => {    // useful when it needs to run some code after the fetch is completed regardless of the outcome, whether it is successful or it throws an error
+        console.log('Fetch operation completed');
+    });
+
+// Async/Await
+async function fetchRandomDogImage() {
+    try {
+        //const response = fetch('https://apis.scrimba.com/dog.ceo/api/breeds/image/random'); // Output: Promise {}
+        // Promise: Pending, Resolved/Fulfilled, Rejected
+        const response = await fetch('https://apis.scrimba.com/dog.ceo/api/breeds/image/random');
+
+        //console.log(response.ok); // Output: true
+        if (!response.ok) { // checks the success of the http response status, which might not throw an error but still indicates a failure
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }        
+        const data = await response.json();
+
+        //console.log(data); // Output: { message: 'https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg', status: 'success' }
+        const imgElement = document.createElement('img');
+        imgElement.src = data.message;
+        imgElement.alt = 'Random Dog Image';
+        document.body.appendChild(imgElement);
+    } catch (error) {
+        console.error('Error fetching dog image:', error);
+    }
+}
+fetchRandomDogImage();
+
+// Researched comparison on the Fetch, Ajax and jQuery that I handled that turns to be an evolution of asynchronous JS handling and realtime data fetching
 /*
 Asynchronous Functions Evolution (from classic to modern):
 Ajax - jQuery - Fetch
