@@ -1,5 +1,5 @@
 // These are simple playground going back to basics of JavaScript
-// Check the js-fullstack-path project/repo for the application or continuation of the roadmap
+// Check the ai-engineering and react-scrimba projects for the application or continuation of the roadmap
 
 // PROFILE SHAPE SWITCHER
 const shapes = {
@@ -231,7 +231,7 @@ Functions: Fully hoisted (can be called before declaration)
 
 // Import/Export (at 15:50:52)
 /*
-Check this in the js-fullstack-path project/repo
+Check this in the ai-engineering project
 This needs module script depending on browser
 It also needs to run with a local server (e.g. Live Server, Vite or Node.js) because of CORS policy when using import/export in the browser
 */
